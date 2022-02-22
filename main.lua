@@ -4,12 +4,8 @@ function love.load()
     sprites = {}
     sprites.playerSheet = love.graphics.newImage('sprites/playerSheet.png')
 
-<<<<<<< HEAD
-    local grid = anim8.newGrid(614, 564, sprites.playerSheet:getWidth(), sprites.playerSheet:getHeight())
-=======
-    local grid = anim8.newGrid(math.floor(sprites.playerSheet:getWidth()/15), math.floor(sprites.playerSheet:getHeight()/3), sprites.playerSheet:getWidth(), sprites.playerSheet:getHeight())
->>>>>>> b34cf31b17ea1d02a15e3f87319f4c435d24aaad
-
+    local grid = anim8.newGrid(614, 564, sprites.playerSheet:getWidth(), sprites.playerSheet:getHeight()) 
+    
     animations = {}
     animations.idle = anim8.newAnimation(grid('1-15',1), 0.5) -- 1-15 that we want the first 15 pictures then 1 to indicate row 1 then how long you want each animation to run for 
     animations.jump = anim8.newAnimation(grid('1-7',2), 0.5)
