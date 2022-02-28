@@ -52,9 +52,10 @@ function love.update(dt)
 end
 
 function love.draw()
-    world:draw() -- dont want to keep when game is active but good to have while programing for debugging 
+    --world:draw() -- dont want to keep when game is active but good to have while programing for debugging 
     -- draw the map 
     gameMap:drawLayer(gameMap.layers["Tile Layer 1"])
+    world:draw() -- dont want to keep when game is active but good to have while programing for debugging  move after drawlayer so we can see it better 
     
     --calling draw from player file
      drawPlayer()

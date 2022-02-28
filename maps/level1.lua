@@ -8,8 +8,8 @@ return {
   height = 12,
   tilewidth = 64,
   tileheight = 64,
-  nextlayerid = 2,
-  nextobjectid = 1,
+  nextlayerid = 3,
+  nextobjectid = 8,
   properties = {},
   tilesets = {
     {
@@ -69,6 +69,99 @@ return {
         0, 0, 0, 4, 5, 5, 5, 5, 5, 5, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 5, 5, 5, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 4, 5, 5, 5, 5, 5, 5, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 5, 5, 5, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 4, 5, 5, 5, 5, 5, 5, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 5, 5, 5, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 2,
+      name = "Platforms",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      objects = {
+        {
+          id = 1,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 192,
+          y = 256,
+          width = 576,
+          height = 512,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 2,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 896,
+          y = 448,
+          width = 448,
+          height = 64,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 3,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 1472,
+          y = 384,
+          width = 448,
+          height = 384,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 5,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 2048,
+          y = 320,
+          width = 448,
+          height = 64,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 6,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 2048,
+          y = -128,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 7,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 2048,
+          y = -128,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        }
       }
     }
   }
