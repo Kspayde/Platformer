@@ -1,5 +1,8 @@
 function love.load()
+    love.window.setMode(1000, 768)
+
     anim8 = require 'libraries/anim8/anim8'
+    sti = require 'libraries/Simple-Tiled-Implementation-Master/sti'
 
     sprites = {}
     sprites.playerSheet = love.graphics.newImage('sprites/playerSheet.png')
@@ -35,16 +38,26 @@ function love.load()
 
     dangerZone = world:newRectangleCollider(0, 550, 800, 50, {collision_class = "Danger"})
     dangerZone:setType('static')
+
+    loadMap()
 end
 
 function love.update(dt)
     world:update(dt)
+    --calling the map that was created with the tiles program in level1.lua
+    gameMap:update(dt)
+    --calling update file from player
+    playerUpdate(dt)
 
 end
 
 function love.draw()
     world:draw() -- dont want to keep when game is active but good to have while programing for debugging 
+    -- draw the map 
+    gameMap:drawLayer(gameMap.layers["Tile Layer 1"])
     
+    --calling draw from player file
+     drawPlayer()
    
 end 
 
@@ -55,6 +68,7 @@ function love.keypressed(key)
         end
     end
 end
+--using a program for level, tiled
 
 function love.mousepressed(x, y, button)
     if button == 1 then 
@@ -63,4 +77,8 @@ function love.mousepressed(x, y, button)
             c:destroy() 
         end
     end
+end
+
+function loadMap()
+    gameMap = sti("maps/level1.lua")
 end
