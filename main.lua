@@ -29,15 +29,17 @@ function love.load()
 
 
     --creates something for the player object to land on still moves need to change the type.
-    platform = world:newRectangleCollider(250, 400, 300, 100, {collision_class = "platform"})
+   -- moved to new function  platform = world:newRectangleCollider(250, 400, 300, 100, {collision_class = "platform"})
 
     -- three trypes of colliders, dyamic, static and kinematic... dynamics are defualt  it will fall with gravity, static they dont move due to physical interactions,
     -- kinematic only collide with dynamic aren't using
 
-    platform:setType('static') -- changes it from the default of dynamic to static to make it stay still 
+   -- moved to new function  platform:setType('static') -- changes it from the default of dynamic to static to make it stay still 
 
-    dangerZone = world:newRectangleCollider(0, 550, 800, 50, {collision_class = "Danger"})
-    dangerZone:setType('static')
+   -- dangerZone = world:newRectangleCollider(0, 550, 800, 50, {collision_class = "Danger"})
+   -- dangerZone:setType('static')
+
+    platforms = {}
 
     loadMap()
 end
@@ -80,6 +82,24 @@ function love.mousepressed(x, y, button)
     end
 end
 
+function spawnPlatform(x, y, width, height)
+    if width > 0 and height > 0 then
+         --creates something for the player object to land on still moves need to change the type.
+        local platform = world:newRectangleCollider(x, y, width, height, {collision_class = "platform"})
+
+        -- three trypes of colliders, dyamic, static and kinematic... dynamics are defualt  it will fall with gravity, static they dont move due to physical interactions,
+        -- kinematic only collide with dynamic aren't using
+    
+        platform:setType('static') -- changes it from the default of dynamic to static to make it stay still 
+    
+        table.insert(platforms, platform)  
+    end
+end
+
 function loadMap()
     gameMap = sti("maps/level1.lua")
+    for i, obj in pairs(gameMap.layers["Platoforms"].objects) do
+        -- object = object from tiles and it will take each of their values. 
+        spawnPlatform(obj.x, obj.y, obj.width, obj.height) 
+    end 
 end
