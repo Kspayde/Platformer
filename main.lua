@@ -3,6 +3,7 @@ function love.load()
 
     anim8 = require 'libraries/anim8/anim8'
     sti = require 'libraries/Simple-Tiled-Implementation-Master/sti'
+    cameraFile = require 'librtaries/hump/camera'
 
     sprites = {}
     sprites.playerSheet = love.graphics.newImage('sprites/playerSheet.png')
@@ -98,7 +99,7 @@ end
 
 function loadMap()
     gameMap = sti("maps/level1.lua")
-    for i, obj in pairs(gameMap.layers["Platoforms"].objects) do
+    for i, obj in pairs(gameMap.layers["Platforms"].objects) do
         -- object = object from tiles and it will take each of their values. 
         spawnPlatform(obj.x, obj.y, obj.width, obj.height) 
     end 
