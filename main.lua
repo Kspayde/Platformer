@@ -51,7 +51,7 @@ function love.load()
     platforms = {}
 
     loadMap()
-    spawnEnemy(960, 320)
+
 end
 
 function love.update(dt)
@@ -125,6 +125,6 @@ function loadMap()
     end 
     for i, obj in pairs(gameMap.layers["Enemies"].objects) do
         -- object = object from tiles and it will take each of their values. for the enemies obj 
-        spawnEnemy(obj.x, obj.y,) 
+        spawnEnemy(obj.x, obj.y) 
     end 
 end
