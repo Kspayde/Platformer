@@ -29,6 +29,7 @@ function love.load()
     -- adding our new playerlua file
 
     require('player')
+    require('enemy')
 
 
 
@@ -46,6 +47,7 @@ function love.load()
     platforms = {}
 
     loadMap()
+    spawnEnemy(960, 320)
 end
 
 function love.update(dt)
@@ -54,6 +56,8 @@ function love.update(dt)
     gameMap:update(dt)
     --calling update file from player
     playerUpdate(dt)
+    -- getting enemy update
+    updateEnemies(dt)
     -- note 2 need to get players position 
     local px, py = player:getPosition()
     -- note 1  make camera follow player ** makes cam look at a specific point in the game
