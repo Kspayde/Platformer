@@ -82,7 +82,7 @@ function love.update(dt)
             loadMap('level2')            -- then it will go to level 2       
         --elseif currentlevel == "level2" then
             --loadMap("level3") *if you have a level 3     
-        elseif currentlevel == "level2" then -- and if you are on level 2 and hit a flag then
+        elseif currentLevel == "level2" then -- and if you are on level 2 and hit a flag then
             loadMap("level1")                -- you go back t level 1
         end     
 

@@ -243,19 +243,6 @@ return {
           rotation = 0,
           visible = true,
           properties = {}
-        },
-        {
-          id = 21,
-          name = "",
-          type = "",
-          shape = "rectangle",
-          x = 1024,
-          y = 448,
-          width = 64,
-          height = 64,
-          rotation = 0,
-          visible = true,
-          properties = {}
         }
       }
     }
