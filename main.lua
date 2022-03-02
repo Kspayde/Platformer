@@ -55,8 +55,8 @@ function love.load()
 
    -- moved to new function  platform:setType('static') -- changes it from the default of dynamic to static to make it stay still 
 
-   -- dangerZone = world:newRectangleCollider(0, 550, 800, 50, {collision_class = "Danger"})
-   -- dangerZone:setType('static')
+    dangerZone = world:newRectangleCollider(-500, 800, 5000, 50, {collision_class = "Danger"})
+    dangerZone:setType('static')
 
     platforms = {}
 
@@ -115,7 +115,7 @@ function love.draw()
         --world:draw() -- dont want to keep when game is active but good to have while programing for debugging 
         -- draw the map 
         gameMap:drawLayer(gameMap.layers["Tile Layer 1"])
-        world:draw() -- dont want to keep when game is active but good to have while programing for debugging  move after drawlayer so we can see it better 
+        --world:draw() -- dont want to keep when game is active but good to have while programing for debugging  move after drawlayer so we can see it better 
         
         --calling draw from player file
         drawPlayer()
@@ -188,8 +188,14 @@ function loadMap(mapName)
     -- is the data you want to save using the show.lua library in that parameters put the name of the table you want to save and a tag
     
     destroyAll()
-    player:setPosition(300, 100)
     gameMap = sti("maps/" .. mapName .. ".lua")
+    for i, obj in pairs(gameMap.layers["Start"].objects) do
+        -- set start position objects 
+        playerStartX =  obj.x   
+        playerStartY = obj.y 
+    end 
+    player:setPosition(playerStartX, playerStartY)
+
     for i, obj in pairs(gameMap.layers["Platforms"].objects) do
         -- object = object from tiles and it will take each of their values. 
         spawnPlatform(obj.x, obj.y, obj.width, obj.height) 
