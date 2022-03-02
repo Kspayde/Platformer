@@ -50,11 +50,7 @@ function love.load()
 
     platforms = {}
 
-    flagX = 0
-    flagY = 0 -- where in the level flag is located 
-
-    
-    loadMap("level1")
+    loadMap()
 
 end
 
@@ -95,9 +91,6 @@ function love.keypressed(key)
             player:applyLinearImpulse(0, -4000)  --make a player jump by pressing upkey
         end
     end
-    if key == 'r' then 
-        loadMap('level2')
-    end
 end
 --using a program for level, tiled
 
@@ -124,29 +117,7 @@ function spawnPlatform(x, y, width, height)
     end
 end
 
-function destroyAll() -- when changing platforms (levels) it will remove all obj (platform and enemies)
-    local i = #platforms
-    while i > -1 do 
-        if platforms[i] ~= nil then 
-            platforms[i]:destroy()
-        end
-        table.remove(platforms, i)
-        i = i -1
-    end
-
-    local i = #enemies
-    while i > -1 do 
-        if enemies[i] ~= nil then 
-            enemies[i]:destroy()
-        end
-        table.remove(enemies, i) -- remove enemies 
-        i = i -1
-    end
-
-end
-
 function loadMap(mapName)
-    destroyAll()
     gameMap = sti("maps/" .. mapName .. ".lua")
     for i, obj in pairs(gameMap.layers["Platforms"].objects) do
         -- object = object from tiles and it will take each of their values. 
@@ -155,10 +126,5 @@ function loadMap(mapName)
     for i, obj in pairs(gameMap.layers["Enemies"].objects) do
         -- object = object from tiles and it will take each of their values. for the enemies obj 
         spawnEnemy(obj.x, obj.y) 
-    end 
-    for i, obj in pairs(gameMap.layers["Flag"].objects) do
-        -- set flag objects 
-        flagX =  obj.x 
-        flagY = obj.y 
     end 
 end
