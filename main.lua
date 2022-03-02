@@ -20,7 +20,7 @@ function love.load()
     animations.idle = anim8.newAnimation(grid('1-15',1), 0.5) -- 1-15 that we want the first 15 pictures then 1 to indicate row 1 then how long you want each animation to run for 
     animations.jump = anim8.newAnimation(grid('1-7',2), 0.5)
     animations.run = anim8.newAnimation(grid('1-15',3), 0.5)
-    animations.enemy = anim8.newAnimation(grid('1-2',1), 0.03)
+    animations.enemy = anim8.newAnimation(enemyGrid('1-2',1), 0.03)
 
     wf = require 'libraries/windfield/windfield' -- include the windfield folder for physics 
     world = wf.newWorld(0,800, false)  --create a world for the physics world. paramters are for gracity 0 for up 0 for down if set to 100 would have them going down
@@ -53,8 +53,10 @@ function love.load()
     flagX = 0
     flagY = 0 -- where in the level flag is located 
 
+    currentLevel = "level1"
+
     
-    loadMap("level1")
+    loadMap(currentLevel)
 
 end
 
@@ -71,7 +73,20 @@ function love.update(dt)
     -- note 1  make camera follow player ** makes cam look at a specific point in the game
     cam:lookAt(px, love.graphics.getHeight()/2) -- cam use (px, py) but screen can get off centered so best to use the the game map for center 
                                                 -- so when play jumps or goes on a lower platform it doesn't move down    
+    
+     -- detect when player hits flag to change to the next level collision detection 
 
+     local colliders = world:queryCircleArea(flagX, flagY, 10, {'player'}) -- locations (flagx and flag y, circumfrance of circle = 10 and collider object)
+     if #colliders > 0 then
+        if currentLevel == "level1" then -- if your on level one and rach a flag
+            loadMap('level2')            -- then it will go to level 2       
+        --elseif currentlevel == "level2" then
+            --loadMap("level3") *if you have a level 3     
+        elseif currentlevel == "level2" then -- and if you are on level 2 and hit a flag then
+            loadMap("level1")                -- you go back t level 1
+        end     
+
+     end
 end
 
 function love.draw()
@@ -147,6 +162,8 @@ end
 
 function loadMap(mapName)
     destroyAll()
+    currentLevel = mapName
+    player:setPosition(300, 100)
     gameMap = sti("maps/" .. mapName .. ".lua")
     for i, obj in pairs(gameMap.layers["Platforms"].objects) do
         -- object = object from tiles and it will take each of their values. 
@@ -158,7 +175,7 @@ function loadMap(mapName)
     end 
     for i, obj in pairs(gameMap.layers["Flag"].objects) do
         -- set flag objects 
-        flagX =  obj.x 
+        flagX =  obj.x   
         flagY = obj.y 
     end 
 end
