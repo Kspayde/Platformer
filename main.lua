@@ -8,9 +8,18 @@ function love.load()
     -- creating cam to make camera file an obj
     cam = cameraFile()
 
+    sounds = {}
+    sounds.jump = love.audio.newSource("audio/jump.wav", "static") -- static for sound effects 
+    sounds.music = love.audio.newSource("audio/music.mp3", "stream") -- stream for music 
+    sounds.music:setLooping(true) -- music will end when track ends so have to allow looping for continues play
+    sounds.music:setVolume(0.5) -- allows to set volume 1 is max so .5 is half volume
+
+    sounds.music:play()
+
     sprites = {}
     sprites.playerSheet = love.graphics.newImage('sprites/playerSheet.png')
     sprites.enemySheet = love.graphics.newImage('sprites/enemySheet.png')
+    sprites.background = love.graphics.newImage('sprites/background.png')
 
     local grid = anim8.newGrid(614, 564, sprites.playerSheet:getWidth(), sprites.playerSheet:getHeight()) 
     local enemyGrid = anim8.newGrid(100, 79, sprites.enemySheet:getWidth(), sprites.enemySheet:getHeight()) 
@@ -34,6 +43,7 @@ function love.load()
 
     require('player')
     require('enemy')
+    require('libraries/show') -- show used to save data to the save data table
 
 
 
@@ -56,7 +66,13 @@ function love.load()
     saveData = {} --create a new table to save data in this case it will be current level
 
     --currentLevel = "level1"
-    saveData.currentlevel = "level1" -- so we'll make current level a property in save data
+    saveData.currentLevel = "level1" -- so we'll make current level a property in save data
+
+    if love.filesystem.getInfo("data.lua") then 
+        local data = love.filesystem.load("data.lua")
+        data()
+
+    end
 
     
     loadMap(saveData.currentLevel)
@@ -93,6 +109,7 @@ function love.update(dt)
 end
 
 function love.draw()
+    love.graphics.draw(sprites.background, 0, 0)
     -- have to call camera want to do that first so everything else is drawn over the camera 
     cam:attach()    
         --world:draw() -- dont want to keep when game is active but good to have while programing for debugging 
@@ -111,6 +128,7 @@ function love.keypressed(key)
     if key == 'up' then 
         if player.grounded then 
             player:applyLinearImpulse(0, -4000)  --make a player jump by pressing upkey
+            sounds.jump:play()
         end
     end
     if key == 'r' then 
@@ -164,8 +182,12 @@ function destroyAll() -- when changing platforms (levels) it will remove all obj
 end
 
 function loadMap(mapName)
-    destroyAll()
+
     saveData.currentLevel = mapName
+    love.filesystem.write("data.lua",table.show(saveData, "saveData")) -- first paramater the file you want to save data to name it whatever you want second parameter
+    -- is the data you want to save using the show.lua library in that parameters put the name of the table you want to save and a tag
+    
+    destroyAll()
     player:setPosition(300, 100)
     gameMap = sti("maps/" .. mapName .. ".lua")
     for i, obj in pairs(gameMap.layers["Platforms"].objects) do
