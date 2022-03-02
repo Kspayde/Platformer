@@ -53,10 +53,13 @@ function love.load()
     flagX = 0
     flagY = 0 -- where in the level flag is located 
 
-    currentLevel = "level1"
+    saveData = {} --create a new table to save data in this case it will be current level
+
+    --currentLevel = "level1"
+    saveData.currentlevel = "level1" -- so we'll make current level a property in save data
 
     
-    loadMap(currentLevel)
+    loadMap(saveData.currentLevel)
 
 end
 
@@ -78,11 +81,11 @@ function love.update(dt)
 
      local colliders = world:queryCircleArea(flagX, flagY, 10, {'player'}) -- locations (flagx and flag y, circumfrance of circle = 10 and collider object)
      if #colliders > 0 then
-        if currentLevel == "level1" then -- if your on level one and rach a flag
+        if saveData.currentLevel == "level1" then -- if your on level one and rach a flag
             loadMap('level2')            -- then it will go to level 2       
         --elseif currentlevel == "level2" then
             --loadMap("level3") *if you have a level 3     
-        elseif currentLevel == "level2" then -- and if you are on level 2 and hit a flag then
+        elseif saveData.currentLevel == "level2" then -- and if you are on level 2 and hit a flag then
             loadMap("level1")                -- you go back t level 1
         end     
 
@@ -162,7 +165,7 @@ end
 
 function loadMap(mapName)
     destroyAll()
-    currentLevel = mapName
+    saveData.currentLevel = mapName
     player:setPosition(300, 100)
     gameMap = sti("maps/" .. mapName .. ".lua")
     for i, obj in pairs(gameMap.layers["Platforms"].objects) do
